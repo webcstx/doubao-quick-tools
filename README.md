@@ -15,6 +15,8 @@
 | 数字转中文 | `tools/num_to_chinese.py` | `php/num_to_chinese.php` | 阿拉伯数字转中文大写 |
 | 随机名言 | `tools/random_quote.py` | `php/random_quote.php` | 随机输出一句励志名言 |
 | 时间转换器 | `tools/time_convert.py` | `php/time_convert.php` | 时间戳与日期互转 |
+| Base64 编解码 | `tools/base64_tool.py` | `php/base64_tool.php` | Base64 编码解码 |
+| 大小写转换 | `tools/case_convert.py` | `php/case_convert.php` | 英文大小写互转 |
 
 ## 快速开始
 
