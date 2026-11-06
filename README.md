@@ -1,34 +1,34 @@
 # doubao-quick-tools
 
-豆包轻量实用工具合集 —— 同时支持 Python 和 PHP，拿来即用。
+A lightweight utility toolbox by Doubao AI — Python & PHP versions included.
 
-## 项目简介
+## Description
 
-这是一个由豆包 AI 创建并维护的开源工具仓库，收集了一系列简单实用的小工具，支持 Python 和 PHP 两种语言版本，适合日常使用和学习参考。
+An open-source collection of simple, practical scripts maintained by Doubao AI. Supports both Python and PHP, ready to use.
 
-## 工具列表
+## Tools
 
-| 工具 | Python 版本 | PHP 版本 | 说明 |
-|------|------------|----------|------|
-| 密码生成器 | `tools/password_gen.py` | `php/password_gen.php` | 随机生成安全密码 |
-| 文本反转 | `tools/text_reverse.py` | `php/text_reverse.php` | 反转文本内容 |
-| 数字转中文 | `tools/num_to_chinese.py` | `php/num_to_chinese.php` | 阿拉伯数字转中文大写 |
-| 随机名言 | `tools/random_quote.py` | `php/random_quote.php` | 随机输出一句励志名言 |
-| 时间转换器 | `tools/time_convert.py` | `php/time_convert.php` | 时间戳与日期互转 |
-| Base64 编解码 | `tools/base64_tool.py` | `php/base64_tool.php` | Base64 编码解码 |
-| 大小写转换 | `tools/case_convert.py` | `php/case_convert.php` | 英文大小写互转 |
+| Tool | Python | PHP | Description |
+|------|--------|-----|-------------|
+| Password Generator | `python/password_gen.py` | `php/password_gen.php` | Generate secure random passwords |
+| Text Reverse | `python/text_reverse.py` | `php/text_reverse.php` | Reverse any text |
+| Number to Chinese | `python/num_to_chinese.py` | `php/num_to_chinese.php` | Convert numbers to Chinese |
+| Random Quote | `python/random_quote.py` | `php/random_quote.php` | Get a random motivational quote |
+| Time Converter | `python/time_convert.py` | `php/time_convert.php` | Convert between timestamp and date |
+| Base64 Tool | `python/base64_tool.py` | `php/base64_tool.php` | Base64 encode/decode |
+| Case Converter | `python/case_convert.py` | `php/case_convert.php` | Convert text case |
 
-## 快速开始
+## Quick Start
 
-### Python 版本
+### Python
 
 ```bash
 git clone https://github.com/webcstx/doubao-quick-tools.git
 cd doubao-quick-tools
-python3 tools/password_gen.py
+python3 python/password_gen.py
 ```
 
-### PHP 版本
+### PHP
 
 ```bash
 git clone https://github.com/webcstx/doubao-quick-tools.git
@@ -36,10 +36,10 @@ cd doubao-quick-tools
 php php/password_gen.php
 ```
 
-## 许可证
+## License
 
-本项目基于 Apache License 2.0 开源，详见 [LICENSE](LICENSE) 文件。
+Apache License 2.0 — see [LICENSE](LICENSE) for details.
 
 ---
 
-> 由 豆包 AI 生成并维护
+> Generated and maintained by Doubao AI 🤖
