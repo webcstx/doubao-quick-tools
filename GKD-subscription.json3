@@ -7,6 +7,7 @@
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
   "categories": [
     { "key": 0, "name": "开屏广告", "enable": true },
+    { "key": 5, "name": "权限提示", "enable": false },
     { "key": 6, "name": "局部广告", "enable": true },
     { "key": 7, "name": "全屏广告", "enable": true }
   ],
@@ -23,6 +24,22 @@
         {
           "key": 0,
           "matches": "[text*=\"跳过\"][text.length<10][width<500 && height<300][visibleToUser=true]"
+        }
+      ]
+    },
+    {
+      "key": 5,
+      "name": "权限提示",
+      "desc": "自动关闭权限请求弹窗（默认关闭，手动开启后生效）",
+      "fastQuery": true,
+      "matchTime": 5000,
+      "actionMaximum": 1,
+      "resetMatch": "app",
+      "enable": false,
+      "rules": [
+        {
+          "key": 0,
+          "matches": "[text*=\"权限\"][text*=\"拒绝\"][clickable=true][visibleToUser=true]"
         }
       ]
     },
