@@ -7,7 +7,7 @@
 ## 📌 订阅地址
 
 ```
-https://github.com/webcstx/doubao-quick-tools/releases/download/v3.0.1/gkd-subscription.json5
+https://github.com/webcstx/doubao-quick-tools/releases/download/v3.0.1/gkd-subscription.json3
 ```
 
 ## ✨ 功能
