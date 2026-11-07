@@ -3,64 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    width: 300px;
-    padding: 20px;
-    font-family: "Microsoft YaHei", sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-  }
-  .header { text-align: center; margin-bottom: 16px; }
-  .header h1 { font-size: 18px; }
-  .header .ver { font-size: 12px; opacity: 0.8; margin-top: 4px; }
-  .box {
-    background: rgba(255,255,255,0.15);
-    border-radius: 10px;
-    padding: 16px;
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  .num { font-size: 36px; font-weight: bold; }
+  body { width: 300px; padding: 20px; font-family: sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+  h1 { font-size: 18px; text-align: center; margin-bottom: 12px; }
+  .box { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 12px; }
+  .num { font-size: 32px; font-weight: bold; }
   .lbl { font-size: 13px; opacity: 0.9; margin-top: 4px; }
-  .features {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 12px;
-    font-size: 12px;
-    line-height: 1.8;
-  }
-  button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    background: white;
-    color: #667eea;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-  }
+  .author { text-align: center; font-size: 11px; opacity: 0.7; margin-top: 12px; }
 </style>
 </head>
 <body>
-  <div class="header">
-    <h1>🛡️ 极速广告拦截器</h1>
-    <div class="ver">Pro v3.0.0</div>
-  </div>
+  <h1>🛡️ 极速广告拦截器 Pro</h1>
   <div class="box">
     <div class="num" id="count">0</div>
-    <div class="lbl">本次已拦截广告</div>
+    <div class="lbl">已拦截广告</div>
   </div>
-  <div class="features">
-    ✅ 弹窗广告拦截<br>
-    ✅ 悬浮广告拦截<br>
-    ✅ 横幅广告拦截<br>
-    ✅ 视频广告拦截<br>
-    ✅ 动态实时拦截
-  </div>
-  <button onclick="refresh()">刷新页面重新拦截</button>
+  <div class="author">by webcatx</div>
   <script src="popup.js"></script>
 </body>
 </html>
