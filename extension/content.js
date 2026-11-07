@@ -1,33 +1,63 @@
-// 极速广告拦截器 - 参考 AdGuard/EasyList 规则
-// 精准拦截，不误杀正常弹窗
+// 极速广告拦截器 - 参考 GKD 规则思路
+// 分类精准拦截，不误杀
 
 let killCount = 0;
 
-// 参考 AdGuard Base Filter 的常见广告选择器（不是瞎写的宽泛规则）
-const AD_SELECTORS = [
-  // 标准广告容器
+// ========== 规则组 1: 开屏/弹窗广告 ==========
+const POPUP_AD_RULES = [
+  // 带"跳过"按钮的开屏广告
+  { match: '[class*="splash"], [id*="splash"]', closeBtn: '[class*="skip"], [id*="skip"], [text*="跳过"]' },
+  // 带广告标识的弹窗
+  { match: '[class*="ad-popup"], [id*="ad-popup"], [class*="ad-modal"], [id*="ad-modal"]', closeBtn: '.close, .close-btn' },
+  // 全屏遮罩广告
+  { match: '[class*="ad-overlay"], [id*="ad-overlay"], [class*="fullscreen-ad"]', closeBtn: '.close, [aria-label="Close"]' }
+];
+
+// ========== 规则组 2: 局部广告 ==========
+const LOCAL_AD_RULES = [
   'div[id^="google_ads_"]',
   'div[id^="div-gpt-ad"]',
   'ins.adsbygoogle',
-  '.adsbox', '.ad-container', '.ad-banner', '.ad-wrapper',
+  '.adsbox', '.ad-container', '.ad-banner',
   '.advertisement', '.advertise-area',
-  // 原生推广
-  '.sponsored-content', '.promoted-post', '.native-ad',
-  // 弹窗广告（只关明确带广告标识的）
-  '.ad-popup', '.ad-modal', '.ad-overlay',
-  // 悬浮广告
-  '.float-ad', '.fixed-ad', '.sticky-ad', '.side-ad'
+  '.sponsored-content', '.promoted-post', '.native-ad'
 ];
 
-// 注入CSS - 精准隐藏
-const css = AD_SELECTORS.join(',') + ' { display: none !important; }';
+// ========== 规则组 3: 悬浮广告 ==========
+const FLOAT_AD_RULES = [
+  '.float-ad', '.fixed-ad', '.sticky-ad',
+  '.side-ad', '.right-ad', '.left-ad',
+  '.bottom-ad', '.top-ad'
+];
+
+// 注入CSS - 局部广告和悬浮广告直接隐藏
+const css = [...LOCAL_AD_RULES, ...FLOAT_AD_RULES].join(',') + ' { display: none !important; }';
 const style = document.createElement('style');
 style.textContent = css;
 (document.head || document.documentElement).appendChild(style);
 
-// 持续检查
-function check() {
-  AD_SELECTORS.forEach(sel => {
+// 检查弹窗广告 - 自动点关闭
+function checkPopups() {
+  POPUP_AD_RULES.forEach(rule => {
+    document.querySelectorAll(rule.match).forEach(popup => {
+      if (popup.style.display === 'none') return;
+      
+      // 找关闭按钮
+      const closeBtn = popup.querySelector(rule.closeBtn);
+      if (closeBtn) {
+        closeBtn.click();
+        killCount++;
+      } else {
+        popup.remove();
+        killCount++;
+      }
+    });
+  });
+}
+
+// 检查局部广告
+function checkLocalAds() {
+  LOCAL_AD_RULES.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
       if (el.style.display !== 'none') {
         el.style.display = 'none';
@@ -37,10 +67,20 @@ function check() {
   });
 }
 
-check();
-setInterval(check, 500);
+// 启动
+checkPopups();
+checkLocalAds();
+
+// 持续检查
+setInterval(() => {
+  checkPopups();
+  checkLocalAds();
+}, 500);
 
 // DOM监听
-new MutationObserver(() => check()).observe(document.documentElement, { childList: true, subtree: true });
+new MutationObserver(() => {
+  checkPopups();
+  checkLocalAds();
+}).observe(document.documentElement, { childList: true, subtree: true });
 
 setInterval(() => chrome.storage.local.set({ blocked: killCount }), 1000);
