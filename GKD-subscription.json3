@@ -30,7 +30,7 @@
     {
       "key": 5,
       "name": "权限提示",
-      "desc": "自动关闭权限请求弹窗（默认关闭，手动开启后生效）",
+      "desc": "自动关闭OPPO/Vivo/小米/荣耀/华为权限弹窗（默认关闭）",
       "fastQuery": true,
       "matchTime": 5000,
       "actionMaximum": 1,
@@ -39,7 +39,12 @@
       "rules": [
         {
           "key": 0,
-          "matches": "[text*=\"权限\"][text*=\"拒绝\"][clickable=true][visibleToUser=true]"
+          "anyMatches": [
+            "[text=\"拒绝\"][clickable=true][visibleToUser=true]",
+            "[text=\"不允许\"][clickable=true][visibleToUser=true]",
+            "[text=\"取消\"][text*=\"权限\"][clickable=true][visibleToUser=true]",
+            "[text=\"以后再说\"][text*=\"权限\"][clickable=true][visibleToUser=true]"
+          ]
         }
       ]
     },
