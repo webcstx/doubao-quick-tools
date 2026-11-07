@@ -21,8 +21,8 @@
   "globalGroups": [
     {
       "key": 0,
-      "name": "开屏广告",
-      "desc": "自动跳过开屏广告",
+      "name": "开屏广告-全局",
+      "desc": "关闭打开应用时的开屏广告",
       "fastQuery": true,
       "matchTime": 10000,
       "actionMaximum": 1,
@@ -35,25 +35,9 @@
       ]
     },
     {
-      "key": 1,
-      "name": "青少年模式",
-      "desc": "关闭青少年模式弹窗（默认关闭）",
-      "fastQuery": true,
-      "matchTime": 5000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "enable": false,
-      "rules": [
-        {
-          "key": 0,
-          "matches": "[text*=\"青少年模式\"][text*=\"关闭\"][clickable=true][visibleToUser=true]"
-        }
-      ]
-    },
-    {
       "key": 2,
-      "name": "更新提示",
-      "desc": "关闭应用更新弹窗（默认关闭）",
+      "name": "更新提示-全局",
+      "desc": "关闭应用的更新弹窗",
       "fastQuery": true,
       "matchTime": 5000,
       "actionMaximum": 1,
@@ -67,35 +51,42 @@
       ]
     },
     {
-      "key": 6,
-      "name": "局部广告",
-      "desc": "关闭局部广告",
+      "key": 1,
+      "name": "青少年模式-全局",
+      "desc": "关闭应用的青少年模式弹窗",
       "fastQuery": true,
       "matchTime": 5000,
       "actionMaximum": 1,
       "resetMatch": "app",
+      "enable": false,
       "rules": [
         {
           "key": 0,
-          "matches": "[text*=\"广告\"][text*=\"关闭\"][clickable=true][visibleToUser=true]"
-        }
-      ]
-    },
-    {
-      "key": 7,
-      "name": "全屏广告",
-      "desc": "关闭全屏广告",
-      "fastQuery": true,
-      "matchTime": 8000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "rules": [
-        {
-          "key": 0,
-          "matches": "[text*=\"立即关闭\"][clickable=true][visibleToUser=true]"
+          "matches": "[text*=\"青少年模式\"][text*=\"关闭\"][clickable=true][visibleToUser=true]"
         }
       ]
     }
   ],
-  "apps": []
+  "apps": [
+    {
+      "id": "com.tencent.mm",
+      "name": "微信",
+      "groups": [
+        {
+          "key": 0,
+          "name": "开屏广告",
+          "desc": "关闭微信开屏广告",
+          "fastQuery": true,
+          "matchTime": 10000,
+          "actionMaximum": 1,
+          "rules": [
+            {
+              "key": 0,
+              "matches": "[text*=\"跳过\"][clickable=true][visibleToUser=true]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
