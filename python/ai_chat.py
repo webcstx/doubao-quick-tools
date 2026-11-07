@@ -23,6 +23,10 @@ def chat(message):
         return "你好！很高兴见到你 😊"
     elif "名字" in message:
         return "我是QuickAI，你的智能助手！"
+    elif "模型" in message or "你是谁" in message or "什么AI" in message:
+        return "我是 Quick AI 大模型 v2.0.0，一个自研的轻量级 AI 引擎，支持聊天和图片生成功能。"
+    elif "版本" in message:
+        return "我当前的版本是 v2.0.0"
     elif "谢谢" in message:
         return "不客气！有问题随时找我～"
     else:
