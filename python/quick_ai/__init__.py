@@ -3,6 +3,3 @@ __version__ = "2.5.0"
 from .configuration_quick import QuickConfig
 from .modeling_quick import QuickForCausalLM
 from .tokenization_quick import QuickTokenizer
-from .quick_ai import QuickAI
-
-__all__ = ["QuickConfig", "QuickForCausalLM", "QuickTokenizer", "QuickAI"]
