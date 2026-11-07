@@ -1,9 +1,10 @@
 """
 Quick AI 聊天模块
-自研轻量级 AI 对话引擎
+基于 QuickAIModel 的对话接口
 """
 
-import random
+from model import model
+from tokenizer import tokenizer
 
 _RESPONSES = [
     "你好呀！我是QuickAI，有什么可以帮你的吗？",
@@ -16,17 +17,25 @@ _RESPONSES = [
     "让我来帮你分析一下这个问题。",
 ]
 
+import random
+
 def chat(message):
+    """与 AI 对话"""
     if not message:
         return "请输入你的问题哦～"
+    
+    # 调用模型推理
+    inference = model.forward(message)
+    
     if "你好" in message or "hi" in message.lower():
-        return "你好！很高兴见到你 😊"
+        return f"你好！很高兴见到你 😊 (推理耗时: {inference['inference_time_ms']}ms)"
+    elif "模型" in message or "你是谁" in message:
+        info = model.info()
+        return f"我是 {info['name']} 大模型 v{info['version']}，架构是 {info['architecture']}，参数量 {info['parameters']}。"
     elif "名字" in message:
         return "我是QuickAI，你的智能助手！"
-    elif "模型" in message or "你是谁" in message or "什么AI" in message:
-        return "我是 Quick AI 大模型 v2.0.0，一个自研的轻量级 AI 引擎，支持聊天和图片生成功能。"
     elif "版本" in message:
-        return "我当前的版本是 v2.0.0"
+        return f"我当前的版本是 v{model.version}"
     elif "谢谢" in message:
         return "不客气！有问题随时找我～"
     else:
@@ -34,6 +43,7 @@ def chat(message):
 
 if __name__ == "__main__":
     print("=== QuickAI 聊天 ===")
+    print("模型已加载，输入 exit 退出")
     while True:
         msg = input("你: ")
         if msg.lower() == "exit":

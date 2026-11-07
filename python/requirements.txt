@@ -1,0 +1,6 @@
+# Quick AI v2.0.0 依赖
+# 当前为轻量版本，仅依赖 Python 标准库
+# 完整版需要:
+# torch>=2.0.0
+# transformers>=4.30.0
+# pillow>=9.0.0

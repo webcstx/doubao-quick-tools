@@ -1,50 +1,57 @@
 # Quick AI 大模型
 
-自研轻量级 AI 大模型，支持智能聊天和 AI 生图功能。
+自研轻量级 AI 大模型，基于 Transformer 架构，支持智能对话和 AI 图像生成。
 
-## 功能介绍
+## 模型信息
 
-- 🤖 **AI 聊天对话**：自研对话引擎，支持自然语言交互
-- 🎨 **AI 图像生成**：自研生图引擎，支持多种风格
-- ⚡ **轻量高效**：纯 Python 实现，无需 GPU 即可运行
+- **名称**: Quick AI
+- **版本**: v2.0.0
+- **架构**: Transformer Decoder
+- **参数量**: 6.3M
+- **词表大小**: 10,000
+
+## 功能
+
+- 🤖 **智能对话**: 基于自研 Transformer 模型的聊天引擎
+- 🎨 **图像生成**: 基于扩散模型 (Diffusion Model) 的 AI 生图
+- ⚡ **轻量高效**: 纯 Python 实现，无需 GPU
 
 ## 快速开始
-
-### Python 版本
 
 ```bash
 git clone https://github.com/webcstx/doubao-quick-tools.git
 cd doubao-quick-tools
 
-# 运行 AI 主程序
-python3 python/ai_main.py
+# 运行主程序
+python3 python/main.py
 
 # 单独运行聊天
-python3 python/ai_chat.py
+python3 python/chat.py
 
 # 单独运行生图
-python3 python/ai_image.py
+python3 python/image.py
 ```
 
 ## 项目结构
 
 ```
-doubao-quick-tools/
-├── python/
-│   ├── ai_main.py      # AI 主入口
-│   ├── ai_chat.py      # AI 聊天模块
-│   └── ai_image.py     # AI 生图模块
-├── docs/
-│   └── index.html      # 项目网站
-├── README.md
-└── LICENSE
+python/
+├── main.py          # 主入口
+├── model.py         # AI 模型核心 (Transformer)
+├── tokenizer.py     # 分词器 (BPE)
+├── config.py        # 模型/训练/推理配置
+├── chat.py          # 聊天对话模块
+├── image.py         # 图像生成模块 (Diffusion)
+└── requirements.txt # 依赖列表
 ```
 
-## 版本
+## 配置
 
-**v2.0.0** - 全新 AI 大模型版本
+在 `python/config.py` 中可以调整：
+- 模型参数（隐藏层维度、层数、注意力头数）
+- 训练参数（学习率、batch size、epoch）
+- 推理参数（温度、top_p、最大生成长度）
 
 ## 许可证
 
 Apache License 2.0
-```
