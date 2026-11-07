@@ -1,7 +1,7 @@
 {
   "id": 777,
   "name": "应用广告拦截",
-  "version": 11,
+  "version": 12,
   "author": "webcatx",
   "checkUpdateUrl": "./gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
@@ -22,12 +22,14 @@
     {
       "key": 0,
       "name": "开屏广告-全局",
-      "desc": "关闭打开应用时的开屏广告",
-      "order": -10,
+      "desc": "毫秒级自动跳过开屏广告",
+      "order": -100,
       "fastQuery": true,
       "matchTime": 10000,
       "actionMaximum": 2,
       "resetMatch": "app",
+      "priorityTime": 100,
+      "forcedTime": 1000,
       "rules": [
         {
           "anyMatches": [
@@ -39,50 +41,15 @@
       ]
     },
     {
-      "key": 1,
-      "name": "青少年模式-全局",
-      "desc": "关闭青少年模式弹窗",
-      "order": -8,
-      "fastQuery": true,
-      "matchTime": 5000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "rules": [
-        {
-          "matches": [
-            "[text*=\"青少年模式\"][text*=\"关闭\"][clickable=true][visibleToUser=true]",
-            "[text*=\"我知道了\"][text*=\"青少年\"][clickable=true][visibleToUser=true]"
-          ]
-        }
-      ]
-    },
-    {
-      "key": 2,
-      "name": "更新提示-全局",
-      "desc": "关闭应用更新弹窗",
-      "order": -5,
-      "fastQuery": true,
-      "matchTime": 5000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "rules": [
-        {
-          "matches": [
-            "[text*=\"更新\"][text*=\"取消\"][clickable=true][visibleToUser=true]",
-            "[text*=\"以后再说\"][clickable=true][visibleToUser=true]"
-          ]
-        }
-      ]
-    },
-    {
       "key": 6,
       "name": "局部广告-全局",
-      "desc": "关闭信息流局部广告",
-      "order": -6,
+      "desc": "毫秒级关闭局部广告",
+      "order": -50,
       "fastQuery": true,
       "matchTime": 5000,
       "actionMaximum": 1,
       "resetMatch": "app",
+      "priorityTime": 100,
       "rules": [
         {
           "matches": [
@@ -95,12 +62,13 @@
     {
       "key": 7,
       "name": "全屏广告-全局",
-      "desc": "关闭全屏弹窗广告",
-      "order": -9,
+      "desc": "毫秒级关闭全屏广告",
+      "order": -90,
       "fastQuery": true,
       "matchTime": 8000,
       "actionMaximum": 1,
       "resetMatch": "app",
+      "priorityTime": 100,
       "rules": [
         {
           "matches": [
