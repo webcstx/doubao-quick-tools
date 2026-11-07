@@ -1,51 +1,50 @@
 {
-  "id": 8888,
-  "name": "猫爪跳过",
-  "version": 2,
+  "id": 666,
+  "name": "应用广告拦截",
+  "version": 9,
   "author": "webcatx",
-  "checkUpdateUrl": "https://raw.githubusercontent.com/webcstx/doubao-quick-tools/main/gkd-subscription.json5",
+  "checkUpdateUrl": "./gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
   "categories": [
-    { "key": 1, "name": "开屏秒跳", "enable": true },
-    { "key": 2, "name": "局部广告", "enable": true }
+    { "key": 0, "name": "开屏广告", "enable": true },
+    { "key": 6, "name": "局部广告", "enable": true }
   ],
   "globalGroups": [
     {
-      "key": 101,
-      "name": "开屏自动点",
-      "desc": "看到跳过就点",
-      "order": -100,
+      "key": 0,
+      "name": "开屏广告-全局",
+      "desc": "自动跳过App开屏广告",
+      "order": -10,
       "fastQuery": true,
-      "matchTime": 8000,
-      "actionMaximum": 1,
+      "matchTime": 10000,
+      "actionMaximum": 2,
       "resetMatch": "app",
       "rules": [
         {
-          "key": 0,
-          "matches": [
-            "[text^=\"跳过\"][text.length<8][clickable=true][visibleToUser=true]",
-            "[desc^=\"跳过\"][desc.length<8][clickable=true][visibleToUser=true]",
-            "[id$=\"_skip_btn\"][clickable=true][visibleToUser=true]"
+          "anyMatches": [
+            "[text*=\"跳过\"][text.length<10][width<500 && height<300][visibleToUser=true]",
+            "[desc*=\"跳过\"][desc.length<10][visibleToUser=true]",
+            "[id$=\"tt_splash_skip_btn\"][visibleToUser=true]",
+            "[id*=\"skip\"][id*=\"btn\"][visibleToUser=true]"
           ]
         }
       ]
     },
     {
-      "key": 202,
-      "name": "局部关广告",
-      "desc": "关掉小广告",
-      "order": -50,
+      "key": 6,
+      "name": "局部广告-全局",
+      "desc": "关闭局部广告",
+      "order": -5,
       "fastQuery": true,
       "matchTime": 5000,
       "actionMaximum": 1,
       "resetMatch": "app",
       "rules": [
         {
-          "key": 0,
           "matches": [
-            "[text*=\"关闭广告\"][clickable=true][visibleToUser=true]",
-            "[desc*=\"关闭广告\"][clickable=true][visibleToUser=true]",
-            "[id*=\"close_ad\"][clickable=true][visibleToUser=true]"
+            "[text*=\"广告\"][text*=\"关闭\"][clickable=true][visibleToUser=true]",
+            "[desc*=\"广告\"][desc*=\"关闭\"][clickable=true][visibleToUser=true]",
+            "[text*=\"关闭广告\"][clickable=true][visibleToUser=true]"
           ]
         }
       ]
