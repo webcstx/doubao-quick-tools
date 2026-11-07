@@ -3,21 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  body { width: 280px; padding: 20px; font-family: sans-serif; background: #f8f9fa; }
-  h1 { font-size: 18px; text-align: center; margin-bottom: 16px; color: #333; }
-  .box { background: white; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 12px; }
-  .num { font-size: 32px; font-weight: bold; color: #4CAF50; }
-  .lbl { color: #666; font-size: 13px; margin-top: 4px; }
-  button { width: 100%; padding: 10px; border: none; border-radius: 6px; background: #4CAF50; color: white; cursor: pointer; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 300px;
+    padding: 20px;
+    font-family: "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+  }
+  .header { text-align: center; margin-bottom: 16px; }
+  .header h1 { font-size: 18px; }
+  .header .ver { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+  .box {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .num { font-size: 36px; font-weight: bold; }
+  .lbl { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+  .features {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: white;
+    color: #667eea;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
-  <h1>🛡️ 极速广告拦截器</h1>
+  <div class="header">
+    <h1>🛡️ 极速广告拦截器</h1>
+    <div class="ver">Pro v3.0.0</div>
+  </div>
   <div class="box">
     <div class="num" id="count">0</div>
     <div class="lbl">本次已拦截广告</div>
   </div>
-  <button onclick="chrome.tabs.reload(); window.close();">刷新页面</button>
+  <div class="features">
+    ✅ 弹窗广告拦截<br>
+    ✅ 悬浮广告拦截<br>
+    ✅ 横幅广告拦截<br>
+    ✅ 视频广告拦截<br>
+    ✅ 动态实时拦截
+  </div>
+  <button onclick="chrome.tabs.reload(); window.close();">刷新页面重新拦截</button>
   <script>
     chrome.storage.local.get('blocked', d => document.getElementById('count').textContent = d.blocked || 0);
   </script>

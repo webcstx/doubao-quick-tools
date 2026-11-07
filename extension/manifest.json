@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "极速广告拦截器",
-  "version": "2.0.0",
-  "description": "自动拦截网页弹窗广告、悬浮广告、横幅广告",
-  "permissions": ["scripting", "activeTab", "storage"],
+  "name": "极速广告拦截器 Pro",
+  "version": "3.0.0",
+  "description": "Pro版！智能拦截网页弹窗广告、悬浮广告、视频广告，还你纯净浏览体验",
+  "permissions": ["scripting", "activeTab", "storage", "tabs"],
   "host_permissions": ["<all_urls>"],
-  "action": { "default_popup": "popup.html" },
+  "action": { "default_popup": "popup.html", "default_title": "极速广告拦截器 Pro" },
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": ["content.js"],
