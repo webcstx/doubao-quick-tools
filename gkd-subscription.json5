@@ -21,24 +21,15 @@
       matchTime: 10000,
       actionMaximum: 2,
       resetMatch: 'app',
-      forcedTime: 10000,
-      actionCdKey: 0,
-      actionMaximumKey: 0,
-      priorityTime: 10000,
-      disableIfAppGroupMatch: '开屏广告',
       rules: [
         {
-          key: 0,
-          excludeMatches: '([text*="搜索" || text="历史记录" || text$="在搜"][text.length>3 && text.length<7][visibleToUser=true]) || ([text="Submit" || text*="阅读并同意" || text="书签" || text="NEXT"][visibleToUser=true]) || ([text$="设置" || text$="选好了" || text^="下一步" || text^="完成" || text*="跳过片"][text.length<10][visibleToUser=true])',
           anyMatches: [
             '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
             '[text*="跳 过"][text.length<10][visibleToUser=true]',
             '[text*="跳過"][text.length<10][visibleToUser=true]',
             '[desc*="跳过"][desc.length<10][visibleToUser=true]',
-            '[id$="tt_splash_skip_btn"][visibleToUser=true]',
-            '[id*="skip"][id*="btn"][visibleToUser=true]'
-          ],
-          snapshotUrls: []
+            '[id$="tt_splash_skip_btn"][visibleToUser=true]'
+          ]
         }
       ]
     },
@@ -53,14 +44,11 @@
       resetMatch: 'app',
       rules: [
         {
-          key: 0,
           matches: [
             '[text*="广告"][text*="关闭"][clickable=true][visibleToUser=true]',
             '[desc*="广告"][desc*="关闭"][clickable=true][visibleToUser=true]',
-            '[text*="关闭广告"][clickable=true][visibleToUser=true]',
-            '[desc*="关闭广告"][clickable=true][visibleToUser=true]'
-          ],
-          snapshotUrls: []
+            '[text*="关闭广告"][clickable=true][visibleToUser=true]'
+          ]
         }
       ]
     }
