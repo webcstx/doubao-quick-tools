@@ -1,77 +1,59 @@
-// 极速广告拦截器 - 仿X浏览器强力版
-// 所有疑似广告全部杀，不管误杀
+// 极速广告拦截器 - 持续强力版
+// 不停杀，广告什么时候出来什么时候杀
 
 let killCount = 0;
 
-// 第一组：广告域名 iframe - 直接删
-const KILL_IFRAMES = [
-  '*://*.doubleclick.net/*', '*://*.googlesyndication.com/*',
-  '*://*.googleadservices.com/*', '*://*.adnxs.com/*',
-  '*://*.taboola.com/*', '*://*.outbrain.com/*',
-  '*://*.popads.net/*', '*://*.adroll.com/*',
-  '*://*.propellerads.com/*', '*://*.amazon-adsystem.com/*'
+// 所有要杀的选择器
+const KILL_SELECTORS = [
+  '[class*="popup"]', '[id*="popup"]',
+  '[class*="modal"]', '[id*="modal"]',
+  '[class*="dialog"]', '[id*="dialog"]',
+  '[class*="overlay"]', '[id*="overlay"]',
+  '[class*="ad-banner"]', '[class*="ad-container"]', '[class*="ad-box"]',
+  '[class*="advertisement"]', '[class*="adsbox"]', '[class*="ad-wrapper"]',
+  '[class*="float-ad"]', '[class*="fixed-ad"]', '[class*="sticky-ad"]',
+  '[class*="sponsored"]', '[class*="promoted"]',
+  'iframe[src*="ads"]', 'iframe[id*="google_ads"]',
+  '[class*="in-feed-ad"]', '[class*="preroll"]'
 ];
 
-// 第二组：强力选择器 - 全部隐藏
-const KILL_CSS = `
-  /* 弹窗类 */
-  [class*="popup"], [id*="popup"],
-  [class*="modal"], [id*="modal"],
-  [class*="dialog"], [id*="dialog"],
-  [class*="overlay"], [id*="overlay"],
-  
-  /* 广告类 */
-  [class*="ad-banner"], [class*="ad-container"], [class*="ad-box"],
-  [class*="advertisement"], [class*="adsbox"], [class*="ad-wrapper"],
-  [class*="ad-fixed"], [class*="ad-float"], [class*="ad-sticky"],
-  [id*="google_ads"], [id*="adsense"], [id*="banner-ad"],
-  
-  /* 悬浮类 */
-  [class*="float-ad"], [class*="fixed-ad"], [class*="sticky-ad"],
-  [class*="floating-ad"], [class*="side-ad"], [class*="right-ad"],
-  
-  /* 推广类 */
-  [class*="sponsored"], [class*="promoted"], [class*="commercial"],
-  [class*="in-feed-ad"], [class*="native-ad"], [class*="preroll"],
-  
-  /* iframe 广告 */
-  iframe[src*="doubleclick"], iframe[src*="googlesyndication"],
-  iframe[src*="ads"], iframe[id*="google_ads"]
-`;
-
-// 注入强力CSS
-function injectKillCSS() {
-  const style = document.createElement('style');
-  style.textContent = KILL_CSS + ' { display: none !important; }';
-  (document.head || document.documentElement).appendChild(style);
-}
-
-// 自动点关闭按钮
-function autoClose() {
-  document.querySelectorAll('.close, .close-btn, .btn-close, [aria-label="关闭"], [aria-label="Close"]').forEach(btn => {
-    const parent = btn.parentElement;
-    if (parent && (parent.className.toLowerCase().includes('ad') || 
-                   parent.className.toLowerCase().includes('popup') ||
-                   parent.className.toLowerCase().includes('modal'))) {
-      btn.click();
-      killCount++;
-    }
+// 杀一次
+function killOnce() {
+  KILL_SELECTORS.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (el.style.display !== 'none' && el.offsetWidth > 20) {
+        el.style.setProperty('display', 'none', 'important');
+        killCount++;
+      }
+    });
   });
 }
 
-// 启动
-injectKillCSS();
+// 第一时间注入CSS - 永久生效
+const css = KILL_SELECTORS.join(',') + ' { display: none !important; }';
+const style = document.createElement('style');
+style.textContent = css;
+(document.head || document.documentElement).appendChild(style);
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { autoClose(); });
-} else {
-  autoClose();
-}
+// 启动就杀
+killOnce();
 
-// 疯狂监听
-const observer = new MutationObserver(() => { autoClose(); });
+// 定时器 - 每500毫秒杀一次，持续杀
+setInterval(killOnce, 500);
+
+// MutationObserver - DOM一变就杀
+const observer = new MutationObserver(() => killOnce());
 if (document.body) {
   observer.observe(document.body, { childList: true, subtree: true });
+} else {
+  // body还没出来就等一下
+  const checkBody = setInterval(() => {
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+      clearInterval(checkBody);
+    }
+  }, 100);
 }
 
-setTimeout(() => chrome.storage.local.set({ blocked: killCount }), 1000);
+// 上报
+setInterval(() => chrome.storage.local.set({ blocked: killCount }), 2000);
