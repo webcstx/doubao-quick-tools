@@ -1,21 +1,19 @@
 {
   "id": 666,
-  "name": "应用广告拦截",
-  "version": 7,
+  "name": "应用广告拦截-极简版",
+  "version": 8,
   "author": "webcatx",
   "checkUpdateUrl": "./gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
+  "description": "轻量极简，只留核心开屏广告跳过规则，不臃肿",
   "categories": [
-    { "key": 0, "name": "开屏广告", "enable": true },
-    { "key": 6, "name": "局部广告", "enable": true },
-    { "key": 7, "name": "全屏广告", "enable": true },
-    { "key": 8, "name": "分段广告", "enable": true }
+    { "key": 0, "name": "开屏广告", "enable": true }
   ],
   "globalGroups": [
     {
       "key": 0,
-      "name": "开屏广告-全局",
-      "desc": "自动跳过App开屏广告",
+      "name": "开屏跳过",
+      "desc": "自动点跳过按钮，所有App通用",
       "order": -10,
       "fastQuery": true,
       "matchTime": 10000,
@@ -25,49 +23,7 @@
         {
           "anyMatches": [
             "[text*=\"跳过\"][text.length<10][width<500 && height<300][visibleToUser=true]",
-            "[text*=\"跳 过\"][text.length<10][visibleToUser=true]",
-            "[text*=\"跳過\"][text.length<10][visibleToUser=true]",
-            "[desc*=\"跳过\"][desc.length<10][visibleToUser=true]",
             "[id$=\"tt_splash_skip_btn\"][visibleToUser=true]"
-          ]
-        }
-      ]
-    },
-    {
-      "key": 6,
-      "name": "局部广告-全局",
-      "desc": "关闭信息流里的局部广告",
-      "order": -5,
-      "fastQuery": true,
-      "matchTime": 5000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "rules": [
-        {
-          "anyMatches": [
-            "[text*=\"广告\"][text*=\"关闭\"][clickable=true][visibleToUser=true]",
-            "[desc*=\"广告\"][desc*=\"关闭\"][clickable=true][visibleToUser=true]",
-            "[text*=\"关闭广告\"][clickable=true][visibleToUser=true]",
-            "[id*=\"ad_close\"][clickable=true][visibleToUser=true]"
-          ]
-        }
-      ]
-    },
-    {
-      "key": 7,
-      "name": "全屏广告-全局",
-      "desc": "关闭全屏弹窗广告",
-      "order": -8,
-      "fastQuery": true,
-      "matchTime": 8000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "rules": [
-        {
-          "anyMatches": [
-            "[text*=\"立即关闭\"][clickable=true][visibleToUser=true]",
-            "[text*=\"点击关闭\"][clickable=true][visibleToUser=true]",
-            "[desc*=\"关闭广告\"][clickable=true][visibleToUser=true]"
           ]
         }
       ]
