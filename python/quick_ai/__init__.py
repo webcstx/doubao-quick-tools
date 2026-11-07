@@ -1,14 +1,8 @@
-"""
-Quick AI SDK - 自研轻量级大模型工具包
-支持对话、图像生成、向量嵌入等能力
-"""
+"""Quick AI 2.5 - 自研轻量级大模型"""
+__version__ = "2.5.0"
+from .configuration_quick import QuickConfig
+from .modeling_quick import QuickForCausalLM
+from .tokenization_quick import QuickTokenizer
+from .quick_ai import QuickAI
 
-__version__ = "2.0.0"
-__author__ = "webcstx"
-
-from .client import QuickAIClient
-from .chat import ChatModel
-from .image import ImageModel
-from .embedding import EmbeddingModel
-
-__all__ = ["QuickAIClient", "ChatModel", "ImageModel", "EmbeddingModel"]
+__all__ = ["QuickConfig", "QuickForCausalLM", "QuickTokenizer", "QuickAI"]

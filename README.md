@@ -1,62 +1,47 @@
-# Quick AI SDK
+# Quick AI 2.5
 
-自研轻量级大模型 SDK，支持对话、图像生成、向量嵌入等能力。
+自研轻量级大模型，参考 Qwen2.5 架构设计。
 
-## 安装
+## 模型尺寸
 
-```bash
-cd python/
-pip install -e .
-```
+| 尺寸 | 隐藏层 | 层数 | 参数量 |
+|------|--------|------|--------|
+| 0.5B | 512 | 6 | 6.3M |
+| 1.5B | 1536 | 28 | 264M |
+| 3B | 2048 | 36 | 604M |
 
 ## 快速开始
 
 ```python
-from quick_ai import QuickAIClient
+from quick_ai import QuickAI
 
-# 初始化客户端
-client = QuickAIClient()
+# 初始化模型
+ai = QuickAI(size="0.5B")
 
 # 对话
-resp = client.chat.create("你好")
-print(resp.text)
+print(ai.chat("你好"))
 
-# 生图
-resp = client.image.generate("一只猫")
-print(resp.style)
-
-# 向量
-resp = client.embedding.embed("测试文本")
-print(resp.dim)
+# 生成
+print(ai.generate("写一首诗"))
 ```
 
 ## 项目结构
 
 ```
 python/
-├── quick_ai/           # SDK 核心包
-│   ├── __init__.py     # 包入口
-│   ├── client.py       # QuickAIClient 主客户端
-│   ├── chat.py         # 对话模型
-│   ├── image.py        # 图像生成模型
-│   ├── embedding.py    # 向量嵌入模型
-│   ├── config.py       # 配置
-│   ├── errors.py       # 错误定义
-│   └── utils.py        # 工具函数
-├── examples/           # 示例代码
-│   ├── chat_demo.py
-│   └── image_demo.py
-├── setup.py            # 安装脚本
-└── requirements.txt    # 依赖
+├── quick_ai/
+│   ├── __init__.py
+│   ├── configuration_quick.py    # 模型配置
+│   ├── modeling_quick.py         # 模型核心
+│   ├── tokenization_quick.py     # 分词器
+│   └── quick_ai.py               # 高级接口
+├── examples/
+│   ├── chat/                     # 对话示例
+│   ├── generation/               # 生成示例
+│   └── function_calling/         # 函数调用示例
+├── setup.py
+└── requirements.txt
 ```
-
-## API 文档
-
-### QuickAIClient
-- `client.chat.create(message)` - 创建对话
-- `client.image.generate(prompt)` - 生成图像
-- `client.embedding.embed(text)` - 生成向量
-- `client.list_models()` - 列出支持的模型
 
 ## 许可证
 
