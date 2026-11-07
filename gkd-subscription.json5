@@ -1,0 +1,34 @@
+{
+  id: 666,
+  name: 'webcatx的GKD订阅',
+  version: 1,
+  author: 'webcatx',
+  checkUpdateUrl: './gkd-subscription.json5',
+  supportUri: 'https://github.com/webcstx/doubao-quick-tools',
+  categories: [
+    { key: 0, name: '开屏广告', enable: true },
+    { key: 6, name: '局部广告', enable: true },
+    { key: 7, name: '全屏广告', enable: true }
+  ],
+  globalGroups: [
+    {
+      key: 0,
+      name: '开屏广告-全局',
+      desc: '关闭开屏广告跳过按钮',
+      matchTime: 10000,
+      actionMaximum: 2,
+      resetMatch: 'app',
+      rules: [
+        {
+          key: 0,
+          matches: [
+            '[text*="跳过"][text.length<10][visibleToUser=true]',
+            '[desc*="跳过"][desc.length<10][visibleToUser=true]'
+          ],
+          snapshotUrls: []
+        }
+      ]
+    }
+  ],
+  apps: []
+}
