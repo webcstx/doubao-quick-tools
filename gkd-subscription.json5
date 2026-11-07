@@ -1,7 +1,7 @@
 {
   id: 666,
   name: 'webcatx的GKD订阅',
-  version: 1,
+  version: 2,
   author: 'webcatx',
   checkUpdateUrl: './gkd-subscription.json5',
   supportUri: 'https://github.com/webcstx/doubao-quick-tools',
@@ -14,16 +14,29 @@
     {
       key: 0,
       name: '开屏广告-全局',
-      desc: '关闭开屏广告跳过按钮',
+      desc: '关闭打开应用时的开屏广告',
+      order: -10,
+      fastQuery: true,
       matchTime: 10000,
       actionMaximum: 2,
       resetMatch: 'app',
+      forcedTime: 10000,
+      actionCdKey: 0,
+      actionMaximumKey: 0,
+      priorityTime: 10000,
+      disableIfAppGroupMatch: '开屏广告',
       rules: [
         {
           key: 0,
-          matches: [
-            '[text*="跳过"][text.length<10][visibleToUser=true]',
-            '[desc*="跳过"][desc.length<10][visibleToUser=true]'
+          excludeMatches: '([text*="搜索" || text="历史记录" || text$="在搜"][text.length>3 && text.length<7][visibleToUser=true]) || ([text="Submit" || text*="阅读并同意" || text="书签" || text="NEXT"][visibleToUser=true]) || ([text$="设置" || text$="选好了" || text^="下一步" || text^="完成" || text*="跳过片"][text.length<10][visibleToUser=true])',
+          anyMatches: [
+            '[text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
+            '[text*="跳 过"][text.length<10][visibleToUser=true]',
+            '[text*="跳過"][text.length<10][visibleToUser=true]',
+            '[desc*="跳过"][desc.length<10][visibleToUser=true]',
+            '[id$="tt_splash_skip_btn"][visibleToUser=true]',
+            '[id*="skip"][id*="btn"][visibleToUser=true]',
+            '@[name$="View" || name$="LinearLayout"][clickable=true][childCount<2][width<300 && height<200] - [text="互动广告"][visibleToUser=true]'
           ],
           snapshotUrls: []
         }
