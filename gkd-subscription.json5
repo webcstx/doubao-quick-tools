@@ -1,21 +1,20 @@
 {
   "id": 666,
-  "name": "webcatx的GKD订阅",
-  "version": 5,
+  "name": "应用广告拦截",
+  "version": 6,
   "author": "webcatx",
   "checkUpdateUrl": "./gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
   "categories": [
     { "key": 0, "name": "开屏广告", "enable": true },
     { "key": 6, "name": "局部广告", "enable": true },
-    { "key": 7, "name": "全屏广告", "enable": true },
-    { "key": 10, "name": "网页广告", "enable": true }
+    { "key": 7, "name": "全屏广告", "enable": true }
   ],
   "globalGroups": [
     {
       "key": 0,
       "name": "开屏广告-全局",
-      "desc": "关闭打开应用时的开屏广告",
+      "desc": "自动跳过App开屏广告",
       "order": -10,
       "fastQuery": true,
       "matchTime": 10000,
@@ -29,25 +28,6 @@
             "[text*=\"跳過\"][text.length<10][visibleToUser=true]",
             "[desc*=\"跳过\"][desc.length<10][visibleToUser=true]",
             "[id$=\"tt_splash_skip_btn\"][visibleToUser=true]"
-          ]
-        }
-      ]
-    },
-    {
-      "key": 10,
-      "name": "网页广告-全局",
-      "desc": "关闭所有App里的网页弹窗广告",
-      "order": -5,
-      "fastQuery": true,
-      "matchTime": 8000,
-      "actionMaximum": 1,
-      "resetMatch": "app",
-      "rules": [
-        {
-          "matches": [
-            "[text*=\"广告\"][text*=\"关闭\"][clickable=true][visibleToUser=true]",
-            "[desc*=\"广告\"][desc*=\"关闭\"][clickable=true][visibleToUser=true]",
-            "[text*=\"关闭广告\"][clickable=true][visibleToUser=true]"
           ]
         }
       ]
