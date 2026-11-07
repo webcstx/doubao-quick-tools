@@ -3,7 +3,7 @@
   "name": "应用广告拦截",
   "version": 3,
   "author": "webcatx",
-  "checkUpdateUrl": "./gkd-subscription.json5",
+  "checkUpdateUrl": "./GKD-subscription.json3",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
   "categories": [
     { "key": 0, "name": "开屏广告", "enable": true },
