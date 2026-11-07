@@ -1,73 +1,75 @@
-// 极速广告拦截器 - 暴力删除版
-// 不是隐藏，是直接从DOM删掉
+// 极速广告拦截器 - 智能关弹窗版
+// 只关广告弹窗，正常弹窗（登录/设置）不动
 
-let killCount = 0;
+let closedCount = 0;
 
-// 暴力选择器大全
-const KILL = [
-  // 弹窗类
-  '[class*="popup"]', '[id*="popup"]',
-  '[class*="modal"]', '[id*="modal"]',
-  '[class*="dialog"]', '[id*="dialog"]',
-  '[class*="overlay"]', '[id*="overlay"]',
-  '[class*="lightbox"]', '[id*="lightbox"]',
+// 判断是不是广告弹窗
+function isAdPopup(el) {
+  const text = (el.innerText || '').toLowerCase();
+  const cls = (el.className || '').toString().toLowerCase();
+  const id = (el.id || '').toLowerCase();
   
-  // 广告类
-  '[class*="ad-banner"]', '[class*="ad-container"]', '[class*="ad-box"]',
-  '[class*="advertisement"]', '[class*="adsbox"]', '[class*="ad-wrapper"]',
-  '[class*="ad-fixed"]', '[class*="ad-float"]', '[class*="ad-sticky"]',
-  '[id*="google_ads"]', '[id*="adsense"]', '[id*="banner-ad"]',
-  '[class*="ads-"]', '[class*="-ads"]', '[id*="ads-"]',
+  // 带广告标识的肯定是
+  if (cls.includes('ad') || id.includes('ad')) return true;
+  if (text.includes('advertisement') || text.includes('广告')) return true;
+  if (text.includes(' sponsored ') || text.includes('推广')) return true;
   
-  // 悬浮类
-  '[class*="float-ad"]', '[class*="fixed-ad"]', '[class*="sticky-ad"]',
-  '[class*="floating"]', '[class*="side-ad"]', '[class*="right-ad"]',
-  '[class*="left-ad"]', '[class*="bottom-ad"]', '[class*="top-ad"]',
+  // 突然弹出的全屏遮罩，大概率是广告
+  if (cls.includes('overlay') && el.offsetWidth > window.innerWidth * 0.8) return true;
   
-  // 推广类
-  '[class*="sponsored"]', '[class*="promoted"]', '[class*="commercial"]',
-  '[class*="in-feed-ad"]', '[class*="native-ad"]', '[class*="preroll"]',
-  '[class*="promo"]', '[class*="marketing"]',
-  
-  // iframe
-  'iframe[src*="ad"]', 'iframe[id*="ad"]', 'iframe[class*="ad"]',
-  'iframe[src*="doubleclick"]', 'iframe[src*="googlesyndication"]'
-];
+  return false;
+}
 
-// 暴力删除函数
-function kill() {
-  KILL.forEach(sel => {
-    document.querySelectorAll(sel).forEach(el => {
-      if (el.parentNode && el.offsetWidth > 10) {
-        el.remove(); // 直接删，不是隐藏
-        killCount++;
+// 找关闭按钮
+function findCloseBtn(popup) {
+  const selectors = [
+    '.close', '.close-btn', '.btn-close',
+    '[aria-label="关闭"]', '[aria-label="Close"]',
+    '.modal-close', '.popup-close',
+    'button[class*="close"]', 'span[class*="close"]'
+  ];
+  for (const sel of selectors) {
+    const btn = popup.querySelector(sel);
+    if (btn) return btn;
+  }
+  return null;
+}
+
+// 检查所有弹窗
+function checkPopups() {
+  const popups = document.querySelectorAll(
+    '[class*="popup"], [class*="modal"], [class*="dialog"], [class*="overlay"]'
+  );
+  
+  popups.forEach(popup => {
+    if (popup.style.display === 'none') return;
+    
+    if (isAdPopup(popup)) {
+      const closeBtn = findCloseBtn(popup);
+      if (closeBtn) {
+        closeBtn.click(); // 自动点关闭
+        closedCount++;
+      } else {
+        popup.remove(); // 找不到按钮就直接删
+        closedCount++;
       }
-    });
+    }
   });
 }
 
-// 注入CSS双保险
-const css = KILL.join(',') + ' { display: none !important; visibility: hidden !important; }';
-const style = document.createElement('style');
-style.textContent = css;
-(document.head || document.documentElement).appendChild(style);
+// 启动就检查
+checkPopups();
 
-// 启动就杀
-kill();
+// 每300ms检查一次 - 新弹窗出来马上关
+setInterval(checkPopups, 300);
 
-// 每200毫秒杀一次 - 更频繁
-setInterval(kill, 200);
-
-// MutationObserver - DOM一变就杀
-const observer = new MutationObserver(() => kill());
-const startObserve = () => {
-  if (document.body) {
-    observer.observe(document.body, { childList: true, subtree: true });
-  } else {
-    requestAnimationFrame(startObserve);
-  }
+// MutationObserver - 页面一变就检查
+const observer = new MutationObserver(() => checkPopups());
+const start = () => {
+  if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+  else requestAnimationFrame(start);
 };
-startObserve();
+start();
 
 // 上报
-setInterval(() => chrome.storage.local.set({ blocked: killCount }), 1000);
+setInterval(() => chrome.storage.local.set({ blocked: closedCount }), 1000);
