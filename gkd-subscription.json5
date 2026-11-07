@@ -1,30 +1,30 @@
 {
-  "id": 999,
-  "name": "webcatx开屏跳过",
+  "id": 88888,
+  "name": "小猫开屏跳过",
   "version": 1,
   "author": "webcatx",
   "checkUpdateUrl": "https://raw.githubusercontent.com/webcstx/doubao-quick-tools/main/gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
   "categories": [
-    { "key": 0, "name": "开屏跳过", "enable": true }
+    { "key": 99, "name": "小猫跳过", "enable": true }
   ],
   "globalGroups": [
     {
-      "key": 100,
-      "name": "自动点跳过",
-      "desc": "看到跳过按钮就点",
-      "order": -100,
+      "key": 999,
+      "name": "小猫自动点跳过",
+      "desc": "小猫帮你点跳过",
+      "order": -999,
       "fastQuery": true,
-      "matchTime": 8000,
+      "matchTime": 9999,
       "actionMaximum": 1,
       "resetMatch": "app",
       "rules": [
         {
           "key": 0,
           "matches": [
-            "[text^=\"跳过\"][text.length<8][clickable=true][visibleToUser=true]",
-            "[desc^=\"跳过\"][desc.length<8][clickable=true][visibleToUser=true]",
-            "[id$=\"_skip\"][clickable=true][visibleToUser=true]"
+            "[text*=\"跳过广告\"][clickable=true][visibleToUser=true]",
+            "[text*=\"跳过视频\"][clickable=true][visibleToUser=true]",
+            "[id*=\"skip_ad\"][clickable=true][visibleToUser=true]"
           ]
         }
       ]
