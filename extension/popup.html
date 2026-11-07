@@ -42,7 +42,6 @@
     font-weight: bold;
     cursor: pointer;
   }
-  button:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -61,9 +60,7 @@
     ✅ 视频广告拦截<br>
     ✅ 动态实时拦截
   </div>
-  <button onclick="chrome.tabs.reload(); window.close();">刷新页面重新拦截</button>
-  <script>
-    chrome.storage.local.get('blocked', d => document.getElementById('count').textContent = d.blocked || 0);
-  </script>
+  <button onclick="refresh()">刷新页面重新拦截</button>
+  <script src="popup.js"></script>
 </body>
 </html>
