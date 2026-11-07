@@ -1,56 +1,62 @@
-# Quick AI 大模型
+# Quick AI SDK
 
-自研轻量级 AI 大模型，基于 Transformer 架构，支持智能对话和 AI 图像生成。
+自研轻量级大模型 SDK，支持对话、图像生成、向量嵌入等能力。
 
-## 模型信息
+## 安装
 
-- **名称**: Quick AI
-- **版本**: v2.0.0
-- **架构**: Transformer Decoder
-- **参数量**: 6.3M
-- **词表大小**: 10,000
-
-## 功能
-
-- 🤖 **智能对话**: 基于自研 Transformer 模型的聊天引擎
-- 🎨 **图像生成**: 基于扩散模型 (Diffusion Model) 的 AI 生图
-- ⚡ **轻量高效**: 纯 Python 实现，无需 GPU
+```bash
+cd python/
+pip install -e .
+```
 
 ## 快速开始
 
-```bash
-git clone https://github.com/webcstx/doubao-quick-tools.git
-cd doubao-quick-tools
+```python
+from quick_ai import QuickAIClient
 
-# 运行主程序
-python3 python/main.py
+# 初始化客户端
+client = QuickAIClient()
 
-# 单独运行聊天
-python3 python/chat.py
+# 对话
+resp = client.chat.create("你好")
+print(resp.text)
 
-# 单独运行生图
-python3 python/image.py
+# 生图
+resp = client.image.generate("一只猫")
+print(resp.style)
+
+# 向量
+resp = client.embedding.embed("测试文本")
+print(resp.dim)
 ```
 
 ## 项目结构
 
 ```
 python/
-├── main.py          # 主入口
-├── model.py         # AI 模型核心 (Transformer)
-├── tokenizer.py     # 分词器 (BPE)
-├── config.py        # 模型/训练/推理配置
-├── chat.py          # 聊天对话模块
-├── image.py         # 图像生成模块 (Diffusion)
-└── requirements.txt # 依赖列表
+├── quick_ai/           # SDK 核心包
+│   ├── __init__.py     # 包入口
+│   ├── client.py       # QuickAIClient 主客户端
+│   ├── chat.py         # 对话模型
+│   ├── image.py        # 图像生成模型
+│   ├── embedding.py    # 向量嵌入模型
+│   ├── config.py       # 配置
+│   ├── errors.py       # 错误定义
+│   └── utils.py        # 工具函数
+├── examples/           # 示例代码
+│   ├── chat_demo.py
+│   └── image_demo.py
+├── setup.py            # 安装脚本
+└── requirements.txt    # 依赖
 ```
 
-## 配置
+## API 文档
 
-在 `python/config.py` 中可以调整：
-- 模型参数（隐藏层维度、层数、注意力头数）
-- 训练参数（学习率、batch size、epoch）
-- 推理参数（温度、top_p、最大生成长度）
+### QuickAIClient
+- `client.chat.create(message)` - 创建对话
+- `client.image.generate(prompt)` - 生成图像
+- `client.embedding.embed(text)` - 生成向量
+- `client.list_models()` - 列出支持的模型
 
 ## 许可证
 

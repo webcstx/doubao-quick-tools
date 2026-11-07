@@ -1,3 +1,5 @@
-# Quick AI v2.0.0
+# Quick AI SDK v2.0.0
 # 轻量版仅依赖 Python 标准库
-# 完整版: torch>=2.0, transformers>=4.30
+# 完整版可选依赖:
+# requests>=2.28.0
+# numpy>=1.21.0
