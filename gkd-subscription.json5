@@ -1,41 +1,34 @@
 {
   "id": 777,
   "name": "应用广告拦截",
-  "version": 12,
+  "version": 13,
   "author": "webcatx",
   "checkUpdateUrl": "./gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
   "categories": [
     { "key": 0, "name": "开屏广告", "enable": true },
-    { "key": 1, "name": "青少年模式", "enable": false },
-    { "key": 2, "name": "更新提示", "enable": false },
-    { "key": 3, "name": "评价提示", "enable": false },
-    { "key": 4, "name": "通知提示", "enable": false },
-    { "key": 5, "name": "权限提示", "enable": false },
     { "key": 6, "name": "局部广告", "enable": true },
-    { "key": 7, "name": "全屏广告", "enable": true },
-    { "key": 8, "name": "分段广告", "enable": false },
-    { "key": 9, "name": "功能类", "enable": false },
-    { "key": 10, "name": "其他", "enable": false }
+    { "key": 7, "name": "全屏广告", "enable": true }
   ],
   "globalGroups": [
     {
       "key": 0,
       "name": "开屏广告-全局",
-      "desc": "毫秒级自动跳过开屏广告",
+      "desc": "自动跳过开屏广告，不误触",
       "order": -100,
       "fastQuery": true,
       "matchTime": 10000,
-      "actionMaximum": 2,
+      "actionMaximum": 1,
       "resetMatch": "app",
       "priorityTime": 100,
-      "forcedTime": 1000,
       "rules": [
         {
+          "key": 0,
+          "excludeMatches": "([text*=\"搜索\" || text=\"历史记录\" || text$=\"在搜\"][text.length>3 && text.length<7][visibleToUser=true]) || ([text=\"Submit\" || text*=\"阅读并同意\" || text=\"书签\" || text=\"NEXT\"][visibleToUser=true]) || ([text$=\"设置\" || text$=\"选好了\" || text^=\"下一步\" || text^=\"完成\" || text*=\"跳过片\"][text.length<10][visibleToUser=true])",
           "anyMatches": [
-            "[text*=\"跳过\"][text.length<10][width<500 && height<300][visibleToUser=true]",
-            "[desc*=\"跳过\"][desc.length<10][visibleToUser=true]",
-            "[id$=\"tt_splash_skip_btn\"][visibleToUser=true]"
+            "[text*=\"跳过\"][text.length<8][width<300 && height<100][clickable=true][visibleToUser=true]",
+            "[desc*=\"跳过\"][desc.length<8][width<300 && height<100][clickable=true][visibleToUser=true]",
+            "[id$=\"tt_splash_skip_btn\"][clickable=true][visibleToUser=true]"
           ]
         }
       ]
@@ -43,7 +36,7 @@
     {
       "key": 6,
       "name": "局部广告-全局",
-      "desc": "毫秒级关闭局部广告",
+      "desc": "只关广告，不误关正常弹窗",
       "order": -50,
       "fastQuery": true,
       "matchTime": 5000,
@@ -52,9 +45,11 @@
       "priorityTime": 100,
       "rules": [
         {
+          "key": 0,
+          "excludeMatches": "([text*=\"关闭通知\" || text*=\"关闭提示\"][visibleToUser=true])",
           "matches": [
-            "[text*=\"广告\"][text*=\"关闭\"][clickable=true][visibleToUser=true]",
-            "[desc*=\"广告\"][desc*=\"关闭\"][clickable=true][visibleToUser=true]"
+            "[text*=\"广告\"][text*=\"关闭\"][text.length<10][clickable=true][visibleToUser=true]",
+            "[desc*=\"广告\"][desc*=\"关闭\"][desc.length<10][clickable=true][visibleToUser=true]"
           ]
         }
       ]
@@ -62,7 +57,7 @@
     {
       "key": 7,
       "name": "全屏广告-全局",
-      "desc": "毫秒级关闭全屏广告",
+      "desc": "只关全屏广告，不误关正常弹窗",
       "order": -90,
       "fastQuery": true,
       "matchTime": 8000,
@@ -71,9 +66,11 @@
       "priorityTime": 100,
       "rules": [
         {
+          "key": 0,
+          "excludeMatches": "([text*=\"权限\" || text*=\"通知\" || text*=\"更新\"][visibleToUser=true])",
           "matches": [
-            "[text*=\"立即关闭\"][clickable=true][visibleToUser=true]",
-            "[text*=\"点击关闭\"][clickable=true][visibleToUser=true]"
+            "[text*=\"立即关闭广告\"][clickable=true][visibleToUser=true]",
+            "[text*=\"点击关闭广告\"][clickable=true][visibleToUser=true]"
           ]
         }
       ]
