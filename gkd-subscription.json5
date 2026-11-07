@@ -1,7 +1,7 @@
 {
-  "id": 666,
+  "id": 777,
   "name": "应用广告拦截",
-  "version": 10,
+  "version": 11,
   "author": "webcatx",
   "checkUpdateUrl": "./gkd-subscription.json5",
   "supportUri": "https://github.com/webcstx/doubao-quick-tools",
