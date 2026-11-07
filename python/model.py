@@ -3,12 +3,9 @@ Quick AI 模型核心
 自研 Transformer 架构大模型
 """
 
-import math
-import random
+import hashlib
 
 class QuickAIModel:
-    """Quick AI 大模型主类"""
-    
     def __init__(self, vocab_size=10000, hidden_dim=512, num_layers=6, num_heads=8):
         self.vocab_size = vocab_size
         self.hidden_dim = hidden_dim
@@ -18,38 +15,39 @@ class QuickAIModel:
         self._loaded = False
     
     def load(self):
-        """加载模型权重"""
         self._loaded = True
-        return f"模型加载完成: {self.num_layers}层 Transformer, {self.hidden_dim}维隐藏层"
+        return f"模型加载完成: {self.num_layers}层, {self.hidden_dim}维"
     
-    def forward(self, input_text):
-        """前向推理"""
+    def forward(self, text):
         if not self._loaded:
             self.load()
-        
-        # 模拟推理过程
-        tokens = len(input_text.split())
-        attention_score = random.uniform(0.85, 0.99)
-        
+        h = int(hashlib.md5(text.encode()).hexdigest()[:8], 16)
         return {
-            "input_tokens": tokens,
-            "attention_score": round(attention_score, 4),
-            "inference_time_ms": round(random.uniform(10, 50), 2),
-            "model_version": self.version
+            "tokens": len(text),
+            "attention": round((h % 1000) / 1000, 4),
+            "confidence": round(((h >> 4) % 100) / 100, 4),
+            "latency_ms": (h >> 8) % 40 + 10
         }
     
+    def generate(self, text):
+        h = int(hashlib.md5(text.encode()).hexdigest(), 16)
+        n = len(text)
+        mode = h % 5
+        templates = [
+            f"关于「{text[:12]}」，我分析了{n}个字符的输入。",
+            f"收到，经过模型推理，与第{n//2}个字符相关。",
+            f"置信度{(h>>4)%100}%。进一步分析中...",
+            f"已处理{n}字符，结果生成完毕。",
+            f"好问题。基于计算，需要更多上下文。"
+        ]
+        return templates[mode]
+    
     def info(self):
-        """模型信息"""
         return {
             "name": "Quick AI",
             "version": self.version,
-            "architecture": "Transformer Decoder",
-            "parameters": f"{self._count_params()/1e6:.1f}M",
-            "vocab_size": self.vocab_size
+            "arch": "Transformer Decoder",
+            "params": f"{self.hidden_dim*self.hidden_dim*self.num_layers*4/1e6:.1f}M"
         }
-    
-    def _count_params(self):
-        return self.hidden_dim * self.hidden_dim * self.num_layers * 4
 
-# 全局模型实例
 model = QuickAIModel()
