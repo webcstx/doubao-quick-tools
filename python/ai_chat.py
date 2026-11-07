@@ -1,12 +1,12 @@
 """
-豆包 AI 聊天模块
+Quick AI 聊天模块
 自研轻量级 AI 对话引擎
 """
 
 import random
 
 _RESPONSES = [
-    "你好呀！我是豆包AI，有什么可以帮你的吗？",
+    "你好呀！我是QuickAI，有什么可以帮你的吗？",
     "这是个好问题！让我想想...",
     "我明白你的意思了，我们可以这样做：",
     "很棒的想法！继续说说看？",
@@ -22,14 +22,14 @@ def chat(message):
     if "你好" in message or "hi" in message.lower():
         return "你好！很高兴见到你 😊"
     elif "名字" in message:
-        return "我是豆包AI，你的智能助手！"
+        return "我是QuickAI，你的智能助手！"
     elif "谢谢" in message:
         return "不客气！有问题随时找我～"
     else:
         return random.choice(_RESPONSES)
 
 if __name__ == "__main__":
-    print("=== 豆包AI 聊天 ===")
+    print("=== QuickAI 聊天 ===")
     while True:
         msg = input("你: ")
         if msg.lower() == "exit":

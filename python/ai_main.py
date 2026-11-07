@@ -1,5 +1,5 @@
 """
-豆包 AI 大模型 v2.0.0
+Quick AI 大模型 v2.0.0
 自研轻量级 AI 引擎，支持聊天和生图
 """
 
@@ -8,7 +8,7 @@ from ai_image import generate_image
 
 def main():
     print("=" * 40)
-    print("🤖 豆包 AI 大模型 v2.0.0")
+    print("🤖 Quick AI 大模型 v2.0.0")
     print("=" * 40)
     while True:
         choice = input("\n1=聊天 2=生图 3=退出: ")

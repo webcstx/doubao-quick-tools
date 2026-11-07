@@ -1,5 +1,5 @@
 """
-豆包 AI 生图模块
+Quick AI 生图模块
 自研 AI 图像生成引擎
 """
 
@@ -21,7 +21,7 @@ def generate_image(prompt, style="auto"):
     }
 
 if __name__ == "__main__":
-    print("=== 豆包AI 生图 ===")
+    print("=== QuickAI 生图 ===")
     prompt = input("描述你想生成的图片: ")
     result = generate_image(prompt)
     print(result)
