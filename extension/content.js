@@ -1,51 +1,46 @@
-// X浏览器风格 - 暴力广告拦截
-// 不管误杀，全杀就完了
+// 极速广告拦截器 - 参考 AdGuard/EasyList 规则
+// 精准拦截，不误杀正常弹窗
 
-let n = 0;
+let killCount = 0;
 
-// 所有弹窗全部关
-function kill() {
-  // 所有 popup/modal/dialog 全删
-  document.querySelectorAll('[class*="popup"],[id*="popup"],[class*="modal"],[id*="modal"],[class*="dialog"],[id*="dialog"],[class*="overlay"],[id*="overlay"]').forEach(e => {
-    e.remove(); n++;
-  });
-  
-  // 所有带 ad 的全删
-  document.querySelectorAll('[class*="ad"],[id*="ad"],[class*="banner"],[id*="banner"]').forEach(e => {
-    if (e.offsetWidth > 20) { e.remove(); n++; }
-  });
-  
-  // 所有 iframe 带广告域名的全删
-  document.querySelectorAll('iframe').forEach(f => {
-    const s = f.src || '';
-    if (s.includes('ad') || s.includes('doubleclick') || s.includes('google')) {
-      f.remove(); n++;
-    }
-  });
-  
-  // 自动点所有关闭按钮
-  document.querySelectorAll('.close,.close-btn,[aria-label="关闭"],[aria-label="Close"]').forEach(b => {
-    b.click(); n++;
+// 参考 AdGuard Base Filter 的常见广告选择器（不是瞎写的宽泛规则）
+const AD_SELECTORS = [
+  // 标准广告容器
+  'div[id^="google_ads_"]',
+  'div[id^="div-gpt-ad"]',
+  'ins.adsbygoogle',
+  '.adsbox', '.ad-container', '.ad-banner', '.ad-wrapper',
+  '.advertisement', '.advertise-area',
+  // 原生推广
+  '.sponsored-content', '.promoted-post', '.native-ad',
+  // 弹窗广告（只关明确带广告标识的）
+  '.ad-popup', '.ad-modal', '.ad-overlay',
+  // 悬浮广告
+  '.float-ad', '.fixed-ad', '.sticky-ad', '.side-ad'
+];
+
+// 注入CSS - 精准隐藏
+const css = AD_SELECTORS.join(',') + ' { display: none !important; }';
+const style = document.createElement('style');
+style.textContent = css;
+(document.head || document.documentElement).appendChild(style);
+
+// 持续检查
+function check() {
+  AD_SELECTORS.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (el.style.display !== 'none') {
+        el.style.display = 'none';
+        killCount++;
+      }
+    });
   });
 }
 
-// CSS注入 - 全部隐藏
-const css = `
-[class*="popup"],[id*="popup"],[class*="modal"],[id*="modal"],
-[class*="dialog"],[id*="dialog"],[class*="overlay"],[id*="overlay"],
-[class*="ad"],[id*="ad"],[class*="banner"],[id*="banner"],
-iframe[src*="ad"],iframe[src*="doubleclick"]
-{ display: none !important; }
-`;
-const s = document.createElement('style');
-s.textContent = css;
-(document.head || document.documentElement).appendChild(s);
-
-// 疯狂循环杀
-kill();
-setInterval(kill, 100); // 每100毫秒杀一次
+check();
+setInterval(check, 500);
 
 // DOM监听
-new MutationObserver(() => kill()).observe(document.documentElement, { childList: true, subtree: true });
+new MutationObserver(() => check()).observe(document.documentElement, { childList: true, subtree: true });
 
-setInterval(() => chrome.storage.local.set({ blocked: n }), 1000);
+setInterval(() => chrome.storage.local.set({ blocked: killCount }), 1000);
