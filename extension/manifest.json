@@ -1,10 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "萌萌小猫",
-  "version": "1.0.0",
-  "description": "一只萌萌的小猫陪你上网",
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "点我撸猫"
-  }
+  "name": "极速广告拦截器",
+  "version": "2.0.0",
+  "description": "自动拦截网页弹窗广告、悬浮广告、横幅广告",
+  "permissions": ["scripting", "activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "action": { "default_popup": "popup.html" },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"],
+    "run_at": "document_start"
+  }]
 }
