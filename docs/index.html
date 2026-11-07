@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doubao-quick-tools - 豆包轻量工具合集</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 1.1em; }
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 16px;
+            font-size: 1.4em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+        .file-list { list-style: none; }
+        .file-list li {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-list li:last-child { border-bottom: none; }
+        .file-list a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .file-list a:hover { text-decoration: underline; }
+        .file-desc { color: #888; font-size: 0.9em; }
+        .demo-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .demo-box h3 {
+            color: #333;
+            margin-bottom: 12px;
+        }
+        .demo-box input, .demo-box textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        .demo-box button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 8px;
+        }
+        .demo-box button:hover { background: #5a6fd6; }
+        .demo-result {
+            background: #2d2d2d;
+            color: #4ade80;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            min-height: 20px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .footer {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab {
+            padding: 8px 16px;
+            background: #eee;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛠️ doubao-quick-tools</h1>
+            <p>豆包轻量实用工具合集 —— 拿来即用，在线可试</p>
+            <div style="margin-top: 12px;">
+                <span class="badge">Python 3</span>
+                <span class="badge">PHP</span>
+                <span class="badge">Apache 2.0</span>
+                <span class="badge">v1.0.0</span>
+            </div>
+        </div>
+
+        <!-- 在线演示 -->
+        <div class="section">
+            <h2>🧪 在线试用</h2>
+            <p style="color: #666; margin-bottom: 16px;">不用下载，直接在网页上试用这些工具：</p>
+
+            <!-- 密码生成器 -->
+            <div class="demo-box">
+                <h3>🔐 密码生成器</h3>
+                <label>密码长度：<span id="pwdLenVal">16</span></label>
+                <input type="range" id="pwdLen" min="4" max="32" value="16" oninput="document.getElementById('pwdLenVal').textContent=this.value">
+                <button onclick="genPassword()">生成密码</button>
+                <div class="demo-result" id="pwdResult">点击按钮生成...</div>
+            </div>
+
+            <!-- 文本反转 -->
+            <div class="demo-box">
+                <h3>🔄 文本反转</h3>
+                <input type="text" id="reverseInput" placeholder="输入要反转的文本..." oninput="doReverse()">
+                <div class="demo-result" id="reverseResult">反转结果会显示在这里</div>
+            </div>
+
+            <!-- 随机名言 -->
+            <div class="demo-box">
+                <h3>💬 随机名言</h3>
+                <button onclick="genQuote()">来一句</button>
+                <div class="demo-result" id="quoteResult">点击按钮获取一句励志名言</div>
+            </div>
+        </div>
+
+        <!-- 文件列表 -->
+        <div class="section">
+            <h2>📁 项目文件（点击查看源码）</h2>
+            <ul class="file-list">
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/README.md" target="_blank">README.md</a>
+                        <div class="file-desc">项目说明文档</div>
+                    </div>
+                    <span class="file-desc">Markdown</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/LICENSE" target="_blank">LICENSE</a>
+                        <div class="file-desc">Apache 2.0 开源许可证</div>
+                    </div>
+                    <span class="file-desc">License</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/python/password_gen.py" target="_blank">python/password_gen.py</a>
+                        <div class="file-desc">Python - 密码生成器</div>
+                    </div>
+                    <span class="file-desc">Python</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/python/text_reverse.py" target="_blank">python/text_reverse.py</a>
+                        <div class="file-desc">Python - 文本反转</div>
+                    </div>
+                    <span class="file-desc">Python</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/python/num_to_chinese.py" target="_blank">python/num_to_chinese.py</a>
+                        <div class="file-desc">Python - 数字转中文</div>
+                    </div>
+                    <span class="file-desc">Python</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/python/random_quote.py" target="_blank">python/random_quote.py</a>
+                        <div class="file-desc">Python - 随机名言</div>
+                    </div>
+                    <span class="file-desc">Python</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/php/password_gen.php" target="_blank">php/password_gen.php</a>
+                        <div class="file-desc">PHP - 密码生成器</div>
+                    </div>
+                    <span class="file-desc">PHP</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/php/text_reverse.php" target="_blank">php/text_reverse.php</a>
+                        <div class="file-desc">PHP - 文本反转</div>
+                    </div>
+                    <span class="file-desc">PHP</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/php/num_to_chinese.php" target="_blank">php/num_to_chinese.php</a>
+                        <div class="file-desc">PHP - 数字转中文</div>
+                    </div>
+                    <span class="file-desc">PHP</span>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://github.com/webcstx/doubao-quick-tools/blob/main/php/random_quote.php" target="_blank">php/random_quote.php</a>
+                        <div class="file-desc">PHP - 随机名言</div>
+                    </div>
+                    <span class="file-desc">PHP</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 使用方法 -->
+        <div class="section">
+            <h2>🚀 如何使用</h2>
+            
+            <h3 style="margin: 16px 0 8px; color: #333;">Python 版本</h3>
+            <div class="code-block">
+# 克隆仓库<br>
+git clone https://github.com/webcstx/doubao-quick-tools.git<br>
+cd doubao-quick-tools<br><br>
+# 运行密码生成器<br>
+python3 python/password_gen.py<br><br>
+# 运行文本反转<br>
+python3 python/text_reverse.py<br><br>
+# 运行随机名言<br>
+python3 python/random_quote.py
+            </div>
+
+            <h3 style="margin: 20px 0 8px; color: #333;">PHP 版本</h3>
+            <div class="code-block">
+# 克隆仓库<br>
+git clone https://github.com/webcstx/doubao-quick-tools.git<br>
+cd doubao-quick-tools<br><br>
+# 运行密码生成器<br>
+php php/password_gen.php<br><br>
+# 运行文本反转<br>
+php php/text_reverse.php<br><br>
+# 运行随机名言<br>
+php php/random_quote.php
+            </div>
+
+            <h3 style="margin: 20px 0 8px; color: #333;">下载直接使用</h3>
+            <p style="color: #666;">
+                不想克隆？直接从 <a href="https://github.com/webcstx/doubao-quick-tools/releases" target="_blank">Release 页面</a> 下载 zip 包，解压就能用。
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>由 豆包 AI 生成并维护 🤖</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/webcstx/doubao-quick-tools" target="_blank">GitHub 仓库</a> · 
+                <a href="https://github.com/webcstx/doubao-quick-tools/releases" target="_blank">下载 Release</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 密码生成器
+        function genPassword() {
+            var len = document.getElementById('pwdLen').value;
+            var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=';
+            var pwd = '';
+            for (var i = 0; i < len; i++) {
+                pwd += chars[Math.floor(Math.random() * chars.length)];
+            }
+            document.getElementById('pwdResult').textContent = pwd;
+        }
+
+        // 文本反转
+        function doReverse() {
+            var text = document.getElementById('reverseInput').value;
+            document.getElementById('reverseResult').textContent = text.split('').reverse().join('');
+        }
+
+        // 随机名言
+        var quotes = [
+            '千里之行，始于足下。',
+            '学而不思则罔，思而不学则殆。',
+            '天行健，君子以自强不息。',
+            '书山有路勤为径，学海无涯苦作舟。',
+            '失败乃成功之母。',
+            '只要功夫深，铁杵磨成针。',
+            '海内存知己，天涯若比邻。',
+            '路漫漫其修远兮，吾将上下而求索。'
+        ];
+        function genQuote() {
+            document.getElementById('quoteResult').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+        }
+    </script>
+</body>
+</html>
